@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\API\RegisterAuthRequest;
-use App\User;
+use App\Models\User;
 use Validator;
 
 class RegisterController extends Controller
@@ -24,7 +24,10 @@ class RegisterController extends Controller
         // Validations
         $rules = [
             'phone'=>'required',
-//            'password'=>'required|min:8'
+            'full_address' => 'required',
+            'email' => 'required',
+            'city' => 'required',
+            'code' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
