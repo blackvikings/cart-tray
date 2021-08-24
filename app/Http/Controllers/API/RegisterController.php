@@ -4,9 +4,9 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\API\RegisterAuthRequest;
 use App\Models\User;
 use Validator;
+use Illuminate\Support\Str;
 
 class RegisterController extends Controller
 {
@@ -14,7 +14,7 @@ class RegisterController extends Controller
     public function __construct()
     {
         // Unique Token
-        $this->apiToken = uniqid(base64_encode(str_random(60)));
+        $this->apiToken = uniqid(base64_encode(Str::random(60)));
     }
     /**
      * Client Login
@@ -24,10 +24,6 @@ class RegisterController extends Controller
         // Validations
         $rules = [
             'phone'=>'required',
-            'full_address' => 'required',
-            'email' => 'required',
-            'city' => 'required',
-            'code' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -52,18 +48,10 @@ class RegisterController extends Controller
                         ]);
                     }
             } else {
-                $postArray = [
-                    'full_name'      => $request->name,
-                    'phone'     => $request->phone,
-                    'api_token' => $this->apiToken
-                ];
-                $user = User::insert($postArray);
                 return response()->json([
-                    "success" => true,
-                    'status' => 200,
-                    'name'         => $request->name,
-                    'phone'        => $request->phone,
-                    'access_token' => $this->apiToken,
+                    "success" => false,
+                    'status' => 404,
+                    "message" => "User not found."
                 ]);
             }
         }
@@ -77,7 +65,10 @@ class RegisterController extends Controller
         $rules = [
             'name'     => 'required|min:3',
             'phone'    => 'required|unique:users',
-//            'password' => 'required|min:8'
+            'full_address' => 'required',
+            'email' => 'required',
+            'city' => 'required',
+            'code' => 'required',
         ];
         $validator = Validator::make($request->all(), $rules);
         if ($validator->fails()) {
@@ -89,7 +80,11 @@ class RegisterController extends Controller
             $postArray = [
                 'full_name'      => $request->name,
                 'phone'     => $request->phone,
-                'api_token' => $this->apiToken
+                'api_token' => $this->apiToken,
+                'full_address' =>$request->full_address,
+                'email' =>$request->email,
+                'city' =>$request->city,
+                'code' => $request->code,
             ];
             // $user = User::GetInsertId($postArray);
             $user = User::insert($postArray);
@@ -100,6 +95,10 @@ class RegisterController extends Controller
                     'name'         => $request->name,
                     'phone'        => $request->phone,
                     'access_token' => $this->apiToken,
+                    'full_address' =>$request->full_address,
+                    'email' =>$request->email,
+                    'city' =>$request->city,
+                    'code' => $request->code,
                 ]);
             } else {
                 return response()->json([

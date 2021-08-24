@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Cart;
-use App\Category;
-use App\User;
+use App\Models\Cart;
+use App\Models\Category;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Product;
-use App\sale;
+use App\Models\Product;
+use App\Models\Sale;
 use Illuminate\Support\Facades\DB;
 use Validator;
-use App\Address;
-use App\SaleDetail;
-use App\ProductSale;
-use App\Admin;
-use App\Notifications\NewOrder;
+use App\Models\Address;
+use App\Models\SaleDetail;
+use App\Models\ProductSale;
+use App\Models\Admin;
+//use App\Notifications\NewOrder;
 
 class ProductContoller extends Controller
 {
@@ -51,7 +51,7 @@ class ProductContoller extends Controller
             $name = strtolower($name);
             $cat = DB::select( DB::raw("SELECT * FROM `categories` WHERE LOWER(name) like '%{$name}%'" ) );
             $sRes = DB::select( DB::raw("SELECT * FROM `products` WHERE LOWER(name) like '%{$name}%'" ) );
-            
+
         }
         else if(isset($name) && $name != '' && $name != null){
             $name = strtolower($name);
@@ -74,7 +74,7 @@ class ProductContoller extends Controller
                 "success" => true,
                 'status' => 200,
                 'message' => 'No data found'
-            ]);  
+            ]);
         }
         else
         {
@@ -87,7 +87,7 @@ class ProductContoller extends Controller
             ]);
         }
 
-        
+
 
     }
 
@@ -111,17 +111,17 @@ class ProductContoller extends Controller
                 "message" => "User token mismatch",
             ]);
         }
-        
+
         $cartCount = Cart::where('user_id', $user->id)->where('product_id', $request->product_id)->count();
         // dd($cartCount);
         if($cartCount == 0)
         {
             $cart = new Cart;
             $cart->product_id = $request->product_id;
-            $cart->qty = $request->qty; 
+            $cart->qty = $request->qty;
             $cart->user_id =$user->id;
-            $cart->save();     
-            
+            $cart->save();
+
             return response()->json([
                 "status" => 200,
                 "success" => true,
@@ -131,7 +131,7 @@ class ProductContoller extends Controller
         else
         {
             $cart = Cart::where('user_id', $user->id)->with('products')->get();
-            
+
             return response()->json([
                 "status" => 200,
                 "success" => true,
@@ -140,7 +140,7 @@ class ProductContoller extends Controller
             ]);
         }
 
-       
+
     }
 
     public function removeCart(Request $request)
@@ -153,9 +153,9 @@ class ProductContoller extends Controller
         if ($validator->fails()) {
             return response()->json(['message'=>$validator->errors()], 401);
         }
-        
+
         $user = User::where('api_token', $request->token)->first();
-        
+
         Cart::where('user_id', $user->id)->where('product_id', $request->product_id)->delete();
 
         return response()->json([
@@ -187,13 +187,13 @@ class ProductContoller extends Controller
                 "message" => "No products exists in cart.",
             ]);
         }
-        
+
         $subTotal = 0;
         foreach($cart as $cat)
         {
             if($cat->products != null)
             {
-                $subTotal = $subTotal + $cat->products->price;   
+                $subTotal = $subTotal + $cat->products->price;
             }
         }
 
@@ -221,29 +221,29 @@ class ProductContoller extends Controller
             return response()->json(['message'=>$validator->errors()], 401);
         }
 
-        
+
         $user_id = User::where('api_token', $token)->first();
-        
+
         // dd($user_id->toArray());
         $sales= new sale();
         $sales->user_id=$user_id->id;
         $sales->order_status='Placed';
         $sales->orderMethod = $request->orderMethod;
         $sales->save();
-        
-        
+
+
         foreach ($request->product_id as $product_id)
         {
             DB::table('product_sale')->insert(['product_id' => $product_id, 'sale_id' => $sales->id]);
-            
+
             Cart::where('product_id', $product_id)->where('user_id', $user_id->id)->delete();
         }
-        
+
         foreach($request->qty as $qty)
         {
             SaleDetail::create(['sale_id' => $sales->id, 'qty' => $qty]);
         }
-        
+
         if($user_id->address_id == null){
             $add=new Address();
             $add->area=$request->address;
@@ -253,8 +253,8 @@ class ProductContoller extends Controller
             $user_id->address_id=$add->id;
             $user_id->save();
         }
-        
-            
+
+
             foreach(Admin::all() as $admin){
                 $admin->notify(new NewOrder);
             }
@@ -271,7 +271,7 @@ class ProductContoller extends Controller
     {
         $user = User::where('api_token', $token)->first();
         $address = Address::where('id', $user->address_id)->first();
-        
+
         return response()->json([
             'status' => 200,
             "success" => true,
@@ -288,17 +288,17 @@ class ProductContoller extends Controller
             'city' => 'required',
             'zip' => 'required'
         ]);
-        
+
          if ($validator->fails()) {
             return response()->json(['error'=>$validator->errors()], 401);
         }
-        
+
         $address = Address::where('id', $id)->first();
         $address->area=$request->address;
         $address->city=$request->city;
         $address->zip=$request->zip;
         $address->save();
-        
+
         return response()->json([
             'status' => 200,
             "success" => true,
@@ -307,34 +307,34 @@ class ProductContoller extends Controller
 
     public function history(Request $request, $token)
     {
-        
-        
+
+
         $user = User::where('api_token', $token)->first();
-        
+
         $res1= sale::where('user_id', $user->id)->with('saledetails')->with(['user' => function($q){
                 $q->with('addresses');
             }])->get();
-        
+
         $product_ids = [];
-        
+
         // dd($res1->toArray());
         foreach($res1 as $sale)
         {
-            $pd_id = ProductSale::where('sale_id', $sale->id)->get();   
-            // dd($pd_id->toArray());   
+            $pd_id = ProductSale::where('sale_id', $sale->id)->get();
+            // dd($pd_id->toArray());
             if(!$pd_id->isEmpty())
             {
                 foreach($pd_id as $id)
                 {
-                    $product_ids[] =  $id->product_id;    
+                    $product_ids[] =  $id->product_id;
                 }
-                
+
             }
-            
+
         }
-         
+
         $products = Product::whereIn('id', $product_ids)->get();
-        
+
         if(!$res1)
         {
             return response()->json([
