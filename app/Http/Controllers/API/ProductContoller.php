@@ -143,20 +143,9 @@ class ProductContoller extends Controller
 
     }
 
-    public function removeCart(Request $request)
+    public function removeCart($id)
     {
-        $validator = Validator::make($request->all(), [
-            'product_id' => 'required',
-            'token' => 'required'
-        ]);
-
-        if ($validator->fails()) {
-            return response()->json(['message'=>$validator->errors()], 401);
-        }
-
-        $user = User::where('api_token', $request->token)->first();
-
-        Cart::where('user_id', $user->id)->where('product_id', $request->product_id)->delete();
+        Cart::where('id', $id)->delete();
 
         return response()->json([
             'status' => 200,
@@ -255,9 +244,9 @@ class ProductContoller extends Controller
         }
 
 
-            foreach(Admin::all() as $admin){
-                $admin->notify(new NewOrder);
-            }
+//            foreach(Admin::all() as $admin){
+//                $admin->notify(new NewOrder);
+//            }
 
         return response()->json([
                 'status' => 200,

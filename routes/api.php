@@ -50,7 +50,7 @@ Route::middleware('APIToken')->group(function () {
     Route::get('get-prescription/{token}', [PrescriptionController::class, 'getPrescription']);
     Route::get('cart-list/{token}', [ProductContoller::class, 'cartList']);
     Route::post('add-to-cart', [ProductContoller::class, 'addTocart']);
-    Route::post('remove-from-cart', [ProductContoller::class, 'removeCart']);
+    Route::delete('remove-from-cart/{id}', [ProductContoller::class, 'removeCart']);
     Route::post('/order/{token}', [ProductContoller::class,'order']);
     Route::get('/history/{token}', [ProductContoller::class, 'history']);
     Route::get('/address/{token}', [ProductContoller::class, 'address']);
