@@ -300,7 +300,7 @@ class ProductContoller extends Controller
 
         $user = User::where('api_token', $token)->first();
 
-        $res1= sale::where('user_id', $user->id)->with('saledetails')->with(['user' => function($q){
+        $res1= Sale::where('user_id', $user->id)->with('saledetails')->with(['user' => function($q){
                 $q->with('addresses');
             }])->get();
 

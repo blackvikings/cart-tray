@@ -21,7 +21,7 @@ class Sale extends Model
 
     public function user()
     {
-    	return $this->belongsTo('App\User','user_id');
+    	return $this->belongsTo(User::class,'user_id');
     }
 
      public function product()
@@ -31,6 +31,6 @@ class Sale extends Model
 
      public function saledetails()
      {
-         return $this->hasMany('App\SaleDetail', 'sale_id');
+         return $this->hasMany(SaleDetail::class, 'sale_id');
      }
 }
