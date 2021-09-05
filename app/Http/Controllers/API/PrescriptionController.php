@@ -5,8 +5,8 @@ namespace App\Http\Controllers\API;
 use http\Env\Response;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Prescription;
-use App\User;
+use App\Models\Prescription;
+use App\Models\User;
 use Validator;
 use Storage;
 
@@ -80,14 +80,14 @@ class PrescriptionController extends Controller
         }
 
     }
-    
+
     public function getPrescription($token)
     {
         $user = User::where('api_token',  $token)->first();
         if(isset($user->id))
         {
             $allPrescription = Prescription::where('user_id', $user->id)->get();
-            
+
             return response()->json([
                     'status' => 200,
                     "success" => true,

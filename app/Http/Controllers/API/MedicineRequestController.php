@@ -4,7 +4,7 @@ namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\MedicineRequest;
+use App\Models\MedicineRequest;
 use Validator;
 class MedicineRequestController extends Controller
 {
