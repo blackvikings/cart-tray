@@ -39,19 +39,19 @@
                     <i class="feather icon-unlock auth-icon"></i>
                 </div>
                 <h3 class="mb-4 text-white">Login</h3>
-                <form action="{{ route('login') }}" method="POST" >
+                <form id="loginForm" method="POST" action="{{ route('login') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="email" class="form-control @error('username') is-invalid @enderror "  placeholder="Username">
-                        @error('username')
+                        <input type="text" class="form-control @error('Username') is-invalid @enderror "  placeholder="Username">
+                        @error('Username')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
                         @enderror
                     </div>
                     <div class="input-group mb-4">
-                        <input type="password" class="form-control @error('password') is-invalid @enderror" placeholder="password">
-                        @error('password')
+                        <input type="Password" class="form-control @error('Password') is-invalid @enderror" placeholder="Password">
+                        @error('Password')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -76,7 +76,33 @@
 <script src="{{ asset('assets/js/vendor-all.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
+<script>
 
+    $(document).ready(function() {
+        // validate the comment form when it is submitted
+        //$("#commentForm").validate();
+
+        // validate signup form on keyup and submit
+        $("#loginForm").validate({
+            rules: {
+                Username: "required",
+                Password: "required"
+
+
+
+            },
+            messages: {
+                Username: "No Input Entered",
+                Password: "No Input Entered",
+
+
+
+            }
+        });
+
+
+    });
+</script>
 </body>
 
 <!-- Mirrored from codedthemes.com/demos/admin-templates/datta-able/bootstrap/default/auth-signin-v3.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 26 May 2021 11:56:41 GMT -->
