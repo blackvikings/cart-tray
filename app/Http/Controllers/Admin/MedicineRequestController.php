@@ -17,6 +17,7 @@ class MedicineRequestController extends Controller
     public function delete($id)
     {
         MedicineRequest::where('id', $id)->delete();
+        toastSuccess('Medicine request added successfully');
         return redirect('admin_panel/requested-medicine');
     }
 

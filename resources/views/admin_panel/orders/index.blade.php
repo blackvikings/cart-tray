@@ -1,8 +1,6 @@
-@extends('admin_panel.adminLayout') @section('content')
-
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+@extends('layouts.app')
+@section('content')
+    <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Categories Table</h4>
@@ -114,6 +112,4 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
 @endsection

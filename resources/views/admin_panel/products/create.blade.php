@@ -1,90 +1,86 @@
-@extends('admin_panel.adminLayout') @section('content')
+@extends('layouts.app')
+@push('css')
+    <style>label.error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            padding:1px 20px 1px 20px;
+        }</style>
+@endpush
+@section('content')
 <script src="{{asset('js/lib/jquery.js')}}"></script>
 <script src="{{asset('js/dist/jquery.validate.js')}}"></script>
-<script src="{{asset('js/dist/additional-methods.js')}}"></script>
-
-<style>label.error {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  padding:1px 20px 1px 20px;
-}</style>
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 d-flex align-items-stretch grid-margin">
-            <div class="row flex-grow">
-                <div class="col-12">
-                    <div class="card">
-                        <div class="card-body">
-                            <a style="color:green;" href="{{route('admin.products')}}">
-                                < Back to List</a>
-                                    <br>
-                                    <br>
-                                    <h4 >Create product</h4>
-                                    <br>
-                                    <img  id="imageHolder" src="" alt="add image" height="300" width="300"/>
-                                    <br>
-                                    <input  type="file" name="inp_files" id="inp_files" multiple="multiple" >
-                                    <br>
-                                    <div id="empty_image"> </div>
-                                    <form class="forms-sample" method="post"  id="product_form">
-                                        {{csrf_field()}}
-
-                                        <input id="inp_img" name="img" type="hidden" value="">
-                                        <br><br>
-                                        <div id="for_extension_error"></div>
-                                        <div class="form-group">
-                                            <label  >Product Name*</label>
-                                            <input type="text" class="form-control" id="Name" name="Name"  value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label  for="Description">Product Description*</label>
-                                            <textarea type="textarea" class="form-control" id="Description" name="Description"></textarea>
-                                        </div>
-                                        <div class="form-group">
-                                            <label  for="Category">Category*</label>
-                                            <select class="form-control form-control-md" id="Category" name="Category">
-                                                @php foreach($catlist->all() as $cat) {
-                                                echo "<option value=".$cat->id." >".$cat->name." </option>"; $select_attribute=''; } @endphp
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label  for="composition_id">Composition*</label>
-                                            <select class="form-control form-control-md" id="composition_id" name="composition_id">
-                                                @php foreach($com->all() as $compotion) {
-                                                echo "<option value=".$compotion->id." >".$compotion->title." </option>"; $select_attribute=''; } @endphp
-                                            </select>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label  >Product Price*</label>
-                                            <input type="text" class="form-control" name="Price" id="Price" value="">
-                                        </div>
-                                        <div class="form-group">
-                                            <label  >Product Discounted Price*</label>
-                                            <input type="text" class="form-control" id="Discounted_Price"  name="Discounted_Price" value="">
-                                        </div>
-                                        <input type="submit" name="saveButton" class="btn btn-success mr-2" id="saveButton" value="Create"  />
-                                    </form>
-                                    @if($errors->any())
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/additional-methods.min.js" ></script>
 
 
-                                    <ul>
-                                        @foreach($errors->all() as $err)
-                                        <tr>
-                                            <td>
-                                                <li>{{$err}}</li>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </ul>
-                                    @endif
+
+<div class="col-12">
+    <div class="card">
+        <div class="card-body">
+            <a style="color:green;" href="{{route('admin.products')}}">
+                < Back to List</a>
+                    <br>
+                    <br>
+                    <h4 >Create product</h4>
+                    <br>
+                    <img  id="imageHolder" src="" alt="add image" height="300" width="300"/>
+                    <br>
+                    <input  type="file" name="inp_files" id="inp_files" multiple="multiple" >
+                    <br>
+                    <div id="empty_image"> </div>
+                    <form class="forms-sample" method="post"  id="product_form">
+                        {{csrf_field()}}
+
+                        <input id="inp_img" name="img" type="hidden" value="">
+                        <br><br>
+                        <div id="for_extension_error"></div>
+                        <div class="form-group">
+                            <label  >Product Name*</label>
+                            <input type="text" class="form-control" id="Name" name="Name"  value="">
                         </div>
-                    </div>
-                </div>
+                        <div class="form-group">
+                            <label  for="Description">Product Description*</label>
+                            <textarea type="textarea" class="form-control" id="Description" name="Description"></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label  for="Category">Category*</label>
+                            <select class="form-control form-control-md" id="Category" name="Category">
+                                @php foreach($catlist->all() as $cat) {
+                                echo "<option value=".$cat->id." >".$cat->name." </option>"; $select_attribute=''; } @endphp
+                            </select>
+                        </div>
 
-            </div>
+                        <div class="form-group">
+                            <label  for="composition_id">Composition*</label>
+                            <select class="form-control form-control-md" id="composition_id" name="composition_id">
+                                @php foreach($com->all() as $compotion) {
+                                echo "<option value=".$compotion->id." >".$compotion->title." </option>"; $select_attribute=''; } @endphp
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label  >Product Price*</label>
+                            <input type="text" class="form-control" name="Price" id="Price" value="">
+                        </div>
+                        <div class="form-group">
+                            <label  >Product Discounted Price*</label>
+                            <input type="text" class="form-control" id="Discounted_Price"  name="Discounted_Price" value="">
+                        </div>
+                        <input type="submit" name="saveButton" class="btn btn-success mr-2" id="saveButton" value="Create"  />
+                    </form>
+                    @if($errors->any())
+
+
+                    <ul>
+                        @foreach($errors->all() as $err)
+                        <tr>
+                            <td>
+                                <li>{{$err}}</li>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </ul>
+                    @endif
         </div>
     </div>
 </div>

@@ -35,7 +35,7 @@ class categoriesController extends Controller
             $cat->images = 'uploads/categories/' . $imageName;
         }
         $cat->save();
-
+        toastSuccess('Category added successfully.');
         return redirect()->route('admin.categories');
     }
 
@@ -64,7 +64,7 @@ class categoriesController extends Controller
             $catToUpdate->images = 'uploads/categories/' . $imageName;
         }
         $catToUpdate->save();
-
+        toastSuccess('Category updated successfully');
         return redirect()->route('admin.categories');
     }
 
@@ -121,7 +121,7 @@ class categoriesController extends Controller
         $catToDelete->delete();
 
 
-
+        toastSuccess('Category deleted successfully');
         return redirect()->route('admin.categories');
     }
 }

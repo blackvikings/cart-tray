@@ -18,20 +18,25 @@ class LoginController extends Controller
     {
         return view('auth.login');
     }
+
     public function adminLogout()
     {
         session()->flush();
         return redirect()->route('admin.login');
     }
-    public function adminPosted(AdminLoginVerifyRequest $request)
+
+    public function adminPosted(Request $request)
     {
+        $request->validate([
+            'Username' => 'required',
+            'Password' => 'required',
+        ]);
+
         $admin = Admin::where('username',$request->Username)->first();
 
         if($admin==null)
         {
-
             $request->session()->flash('message', 'Invalid Username');
-
             return redirect(route('admin.login'));
         }
 

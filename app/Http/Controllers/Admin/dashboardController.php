@@ -11,6 +11,7 @@ class dashboardController extends Controller
     public function index(){
         $sales =  sale::all();
         return view('admin_panel.dashboard.index')
+//        return view('layouts.app')
         ->with('sales',$sales);
     }
 }

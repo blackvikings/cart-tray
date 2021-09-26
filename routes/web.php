@@ -21,8 +21,8 @@ use App\Http\Controllers\Admin\MedicineRequestController;
 |
 */
 
-Route::get('/', [LoginController::class, 'index']);
-Route::post('admin', [LoginController::class, 'adminPosted'])->name('login');
+Route::get('/', [LoginController::class, 'index'])->name('admin.login');
+Route::post('admin', [LoginController::class, 'adminPosted'])->name('adminlogin');
 
 Route::group(['middleware' => 'admin'], function(){
     Route::get("/admin_panel", [dashboardController::class,'index'])->name('admin.dashboard');
@@ -39,7 +39,7 @@ Route::group(['middleware' => 'admin'], function(){
 
     //products
     Route::group(['middleware' => 'cors'], function(){
-        Route::get('/admin_panel/products', 'admin_panel\productsController@index')->name('admin.products');
+        Route::get('/admin_panel/products', [productsController::class,'index'])->name('admin.products');
     });
 
 

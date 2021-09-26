@@ -84,6 +84,7 @@ class PrescriptionController extends Controller
     public function destroy($id)
     {
         Prescription::where('id', $id)->delete();
+        toastSuccess('Prescription deleted successfully');
         return redirect('admin_panel/prescription');
     }
 }

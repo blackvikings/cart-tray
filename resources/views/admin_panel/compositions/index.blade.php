@@ -1,18 +1,16 @@
-@extends('admin_panel.adminLayout') @section('content')
-    <script src="{{asset('js/lib/jquery.js')}}"></script>
-    <script src="{{asset('js/dist/jquery.validate.js')}}"></script>
+@extends('layouts.app')
+@push('css')
     <style>label.error {
             color: #a94442;
             background-color: #f2dede;
             border-color: #ebccd1;
             padding:1px 20px 1px 20px;
         }</style>
+@endpush
+@section('content')
 
 
-
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-12 stretch-card">
+    <div class="col-12 stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Add Compositions</h4>
@@ -30,7 +28,7 @@
                 </div>
             </div>
 
-            <div class="col-lg-12 grid-margin stretch-card">
+    <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Compositions Table</h4>
@@ -68,10 +66,10 @@
                                             {{$cat->updated_at}}
                                         </td>
                                         <td>
-                                            <a href="{{route('admin.composition.edit', ['id' => $cat->id])}}" class="btn btn-warning">Edit</a>
+                                            <a href="{{route('admin.composition.edit',  $cat->id)}}" class="btn btn-warning">Edit</a>
                                         </td>
                                         <td>
-                                            <a href="{{route('admin.composition.delete', ['id' => $cat->id])}}" class="btn btn-danger">Delete</a>
+                                            <a href="{{route('admin.composition.delete', $cat->id)}}" class="btn btn-danger">Delete</a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -81,8 +79,7 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
+
 
 
     <!--JQUERY Validation-->

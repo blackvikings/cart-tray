@@ -39,10 +39,10 @@
                     <i class="feather icon-unlock auth-icon"></i>
                 </div>
                 <h3 class="mb-4 text-white">Login</h3>
-                <form id="loginForm" method="POST" action="{{ route('login') }}">
+                <form method="POST" action="{{ route('adminlogin') }}">
                     @csrf
                     <div class="input-group mb-3">
-                        <input type="text" class="form-control @error('Username') is-invalid @enderror "  placeholder="Username">
+                        <input type="text" name="Username" class="form-control @error('Username') is-invalid @enderror "  placeholder="Username">
                         @error('Username')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -50,7 +50,7 @@
                         @enderror
                     </div>
                     <div class="input-group mb-4">
-                        <input type="Password" class="form-control @error('Password') is-invalid @enderror" placeholder="Password">
+                        <input type="password" name="Password" class="form-control @error('Password') is-invalid @enderror" placeholder="Password">
                         @error('Password')
                         <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -76,6 +76,7 @@
 <script src="{{ asset('assets/js/vendor-all.min.js') }}"></script>
 <script src="{{ asset('assets/plugins/bootstrap/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/pcoded.min.js') }}"></script>
+<script src="{{ asset('assets/plugins/jquery-validation/js/jquery.validate.min.js') }}"></script>
 <script>
 
     $(document).ready(function() {
@@ -87,16 +88,10 @@
             rules: {
                 Username: "required",
                 Password: "required"
-
-
-
             },
             messages: {
                 Username: "No Input Entered",
                 Password: "No Input Entered",
-
-
-
             }
         });
 

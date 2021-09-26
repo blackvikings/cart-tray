@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Composition;
+use App\Models\Composition;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -42,7 +42,7 @@ class CompositionController extends Controller
         ]);
 
         Composition::create([ 'title' => $request->title]);
-
+        toastSuccess('Composition added successfully.');
         return redirect()->back();
     }
 
@@ -84,7 +84,7 @@ class CompositionController extends Controller
 
         $composition->title = $request->title;
         $composition->save();
-
+        toastSuccess('Composition updated successfully');
         return redirect()->route('admin.composition');
     }
 
@@ -97,6 +97,7 @@ class CompositionController extends Controller
     public function destroy(Composition $composition)
     {
         $composition->delete();
+        toastSuccess('Composition deleted successfully');
         return redirect()->back();
     }
 }

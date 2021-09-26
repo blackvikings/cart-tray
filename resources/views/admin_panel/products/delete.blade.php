@@ -1,10 +1,7 @@
-@extends('admin_panel.adminLayout') @section('content')
+@extends('layouts.app')
+@section('content')
 
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-md-12 d-flex align-items-stretch grid-margin">
-            <div class="row flex-grow">
-                <div class="col-12">
+<div class="col-12">
                     <div class="card">
                         <div class="card-body">
                             <a href="{{route('admin.products')}}">
@@ -60,10 +57,6 @@
                     </div>
                 </div>
 
-            </div>
-        </div>
-    </div>
-</div>
 <script>
     function readURL(input) {
 

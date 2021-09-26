@@ -1,12 +1,10 @@
-@extends('admin_panel.adminLayout')
+@extends('layouts.app')
 @php
     //dd($media->toArray());
 @endphp
 @section('content')
 
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+    <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Image Table</h4>
@@ -22,7 +20,5 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
 
 @endsection

@@ -1,7 +1,5 @@
-@extends('admin_panel.adminLayout')
-@section('content')
-    <script src="{{ asset('js/lib/jquery.js') }}"></script>
-    <script src="{{ asset('js/dist/jquery.validate.js') }}"></script>
+@extends('layouts.app')
+@push('css')
     <style>
         label.error {
             color: #a94442;
@@ -10,9 +8,9 @@
             padding:1px 20px 1px 20px;
         }
     </style>
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-lg-12 grid-margin stretch-card">
+@endpush
+@section('content')
+    <div class="col-lg-12 grid-margin stretch-card">
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title">Image Table</h4>
@@ -56,7 +54,4 @@
                     </div>
                 </div>
             </div>
-        </div>
-    </div>
-
 @endsection

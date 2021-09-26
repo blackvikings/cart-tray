@@ -46,7 +46,7 @@ class MediaController extends Controller
         $request->image->move(public_path('uploads/slider-images'), $imageName);
         $images->images = 'uploads/slider-images/'.$imageName;
         $images->save();
-
+        toastSuccess('Image uploaded successfully');
         return redirect()->route('admin.media');
     }
 

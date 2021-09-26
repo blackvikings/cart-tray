@@ -5,11 +5,11 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
-use App\Product;
-use App\Category;
-use App\sale;
-use App\User;
-use App\Address;
+use App\Models\Product;
+use App\Models\Category;
+use App\Models\sale;
+use App\Models\User;
+use App\Models\Address;
 class managementController extends Controller
 {
     public function manage()
@@ -31,6 +31,7 @@ class managementController extends Controller
     		$n->order_status=$r->stat;
     		$n->save();
     	}
+        toastSuccess('Order status updated successfully');
     	return redirect()->route('admin.orderManagement');
 
     }

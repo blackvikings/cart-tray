@@ -1,8 +1,9 @@
-@extends('admin_panel.adminLayout') 
+@extends('layouts.app')
+@push('css')
+    <link rel="stylesheet" type="text/css" href="//cdn.datatables.net/1.10.12/css/jquery.dataTables.min.css" />
+@endpush
 @section('content')
-<div class="content-wrapper">
-    <div class="row">
-        <div class="col-lg-12 grid-margin stretch-card">
+    <div class="col-lg-12 grid-margin stretch-card">
             <div class="card">
                 <div class="card-body">
                     <h4 class="card-title">Products Table <a class="btn btn-lg btn-success" style="float:right;color:white" href="{{route('admin.products.create')}}">+ Add Product</a></h4>
@@ -45,15 +46,13 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
 @endsection
 
 @push('js')
+    <script src="//cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript">
   $(function () {
-    
+
     var table = $('#data-table').DataTable({
         processing: true,
         serverSide: true,
@@ -65,7 +64,9 @@
             {data: 'action', name: 'action', orderable: false, searchable: false},
         ]
     });
-    
+
+    con
+
   });
 
 </script>

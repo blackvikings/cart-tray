@@ -1,17 +1,15 @@
-@extends('admin_panel.adminLayout') @section('content')
-<script src="{{asset('js/lib/jquery.js')}}"></script>
-<script src="{{asset('js/dist/jquery.validate.js')}}"></script>
-<style>label.error {
-  color: #a94442;
-  background-color: #f2dede;
-  border-color: #ebccd1;
-  padding:1px 20px 1px 20px;
-}</style>
+@extends('layouts.app')
+@push('css')
+    <style>label.error {
+            color: #a94442;
+            background-color: #f2dede;
+            border-color: #ebccd1;
+            padding:1px 20px 1px 20px;
+        }</style>
 
+@endpush
+@section('content')
 
-
-<div class="content-wrapper">
-    <div class="row">
         <div class="col-12 stretch-card">
             <div class="card">
                 <div class="card-body">
@@ -92,31 +90,30 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
-
-
-<!--JQUERY Validation-->
-<script>
-
-	// $(document).ready(function() {
-    //
-	// 	$("#cat_form").validate({
-	// 		rules: {
-	// 			Name: "required",
-	// 			Type: "required",
-    //
-	// 		},
-	// 		messages: {
-	// 			Name: "Category Name is Required",
-	// 			Type: "Category Type is Required",
-    //
-	// 		}
-	// 	});
-    //
-    //
-	// });
-	</script>
-<!--/JQUERY Validation-->
 
 @endsection
+
+@push('js')
+    <!--JQUERY Validation-->
+    <script>
+
+        // $(document).ready(function() {
+        //
+        // 	$("#cat_form").validate({
+        // 		rules: {
+        // 			Name: "required",
+        // 			Type: "required",
+        //
+        // 		},
+        // 		messages: {
+        // 			Name: "Category Name is Required",
+        // 			Type: "Category Type is Required",
+        //
+        // 		}
+        // 	});
+        //
+        //
+        // });
+    </script>
+    <!--/JQUERY Validation-->
+@endpush

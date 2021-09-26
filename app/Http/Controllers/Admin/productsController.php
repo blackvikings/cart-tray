@@ -26,16 +26,11 @@ class productsController extends Controller
 
             return Datatables::of($products)
             ->addColumn('action', function ($product) {
-                return '<a href="/admin_panel/products/edit/'.$product->id.'" class="btn btn-primary"><i class="mdi mdi-grease-pencil"></i></a>  <a href="/admin_panel/products/delete/'.$product->id.'" class="btn btn-danger"> <i class="mdi mdi-delete-forever"></i> </a>';
+                return '<a href="/admin_panel/products/edit/'.$product->id.'" class="btn btn-primary"><i class="feather icon-edit"></i></a>  <a href="/admin_panel/products/delete/'.$product->id.'" class="btn btn-danger"> <i class="feather icon-delete"></i> </a>';
             })
-
             ->make(true);
-
-
         }
-
     	return view('admin_panel.products.index');
-
     }
 
      public function create()
@@ -49,7 +44,7 @@ class productsController extends Controller
     public function import()
     {
         Excel::import(new ProductImport, request()->file('file'));
-
+        toastSuccess('Products added successfully');
         return back();
     }
 
@@ -113,6 +108,7 @@ class productsController extends Controller
             }
 
         }
+        toastSuccess('Product added successfully');
         return redirect()->route('admin.products');
         } catch (\Throwable $th) {
             dd($th->getMessage());
@@ -191,7 +187,7 @@ class productsController extends Controller
 
 
       }
-
+            toastSuccess('Product updated successfully.');
             return redirect()->route('admin.products');
 
 
@@ -230,7 +226,7 @@ class productsController extends Controller
     {
 
         $prd = Product::find($id);
-
+        toastSuccess('Product deleted successfully');
         return view('admin_panel.products.delete')
             ->with('product', $prd);
     }
@@ -267,7 +263,7 @@ class productsController extends Controller
 //        if(!$prdToDelete->isEmpty()){
             $prdToDelete->delete();
 //        }
-
+        toastSuccess('Product deleted successfully');
         return redirect()->route('admin.products');
 
     }

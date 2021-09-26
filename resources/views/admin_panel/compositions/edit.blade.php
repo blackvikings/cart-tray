@@ -1,17 +1,15 @@
-@extends('admin_panel.adminLayout') @section('content')
-    <script src="{{asset('js/lib/jquery.js')}}"></script>
-    <script src="{{asset('js/dist/jquery.validate.js')}}"></script>
+@extends('layouts.app')
+@push('css')
     <style>label.error {
             color: #a94442;
             background-color: #f2dede;
             border-color: #ebccd1;
             padding:1px 20px 1px 20px;
         }</style>
-    <div class="content-wrapper">
-        <div class="row">
-            <div class="col-md-12 d-flex align-items-stretch grid-margin">
-                <div class="row flex-grow">
-                    <div class="col-12">
+@endpush
+@section('content')
+
+    <div class="col-12">
                         <div class="card">
                             <div class="card-body">
                                 <a href="{{route('admin.categories')}}"> < Back to List</a>
@@ -30,13 +28,8 @@
                         </div>
                     </div>
 
-                </div>
-            </div>
-        </div>
-    </div>
-
-
-    <!--JQUERY Validation-->
+@endsection
+@push('js')
     <script>
 
         $(document).ready(function() {
@@ -63,4 +56,4 @@
         });
     </script>
     <!--/JQUERY Validation-->
-@endsection
+@endpush
