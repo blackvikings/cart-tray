@@ -7,14 +7,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\DB;
 use App\Models\Product;
 use App\Models\Category;
-use App\Models\sale;
+use App\Models\Sale;
 use App\Models\User;
 use App\Models\Address;
 class managementController extends Controller
 {
     public function manage()
     {
-        $sale= sale::with(['user' => function($query){
+        $sale= Sale::with(['user' => function($query){
     	    $query->with('addresses');
         }])->with('product')->with('saledetails')->get();
 
@@ -24,7 +24,7 @@ class managementController extends Controller
     }
     public function update(Request $r)
     {
-    	$n=sale::find($r->orderId);
+    	$n=Sale::find($r->orderId);
 
     	if($n)
     	{
