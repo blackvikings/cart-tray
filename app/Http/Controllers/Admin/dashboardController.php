@@ -4,12 +4,12 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Models\Sale;
+use App\Models\sale;
 
 class dashboardController extends Controller
 {
     public function index(){
-        $sales =  Sale::all();
+        $sales =  sale::all();
         return view('admin_panel.dashboard.index')
 //        return view('layouts.app')
         ->with('sales',$sales);
